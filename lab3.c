@@ -63,6 +63,15 @@ int main()
 			goto err;
 		}
 
+
+		if ((ret = dbp->get(dbp, NULL, &key, &data, 0)) == 0)
+			printf("db: %s: key retrieved: data was %s.\n",
+			    (char *)key.data, (char *)data.data);
+		else {
+			dbp->err(dbp, ret, "DB->get");
+			goto err;
+		}
+
 // 	if ((ret = dbp->del(dbp, NULL, &key, 0)) == 0)
 // 		printf("db: %s: key was deleted.\n", (char *)key.data);
 // 	else {
@@ -75,8 +84,8 @@ int main()
 // 		    (char *)key.data, (char *)data.data);
 // 	else
 // 		dbp->err(dbp, ret, "DB->get");
-// err:	if ((t_ret = dbp->close(dbp, 0)) != 0 && ret == 0)
-// 		ret = t_ret;
+err:	if ((t_ret = dbp->close(dbp, 0)) != 0 && ret == 0)
+		ret = t_ret;
 
 	exit(ret);
 }
