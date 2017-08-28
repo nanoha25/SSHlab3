@@ -25,10 +25,10 @@ int main()
 	memset(&key, 0, sizeof(key));
 	memset(&data, 0, sizeof(data));
 
-	key.data = "fruit";
-	key.size = sizeof("fruit");
-	data.data = "apple";
-	data.size = sizeof("apple");
+	key.data = "chara";
+	key.size = sizeof("chara");
+	data.data = "nanoha";
+	data.size = sizeof("nanoha");
 
 	if ((ret = dbp->put(dbp, NULL, &key, &data, 0)) == 0)
 		printf("db: %s: key stored.\n", (char *)key.data);
@@ -58,6 +58,41 @@ int main()
 		dbp->err(dbp, ret, "DB->get");
 err:	if ((t_ret = dbp->close(dbp, 0)) != 0 && ret == 0)
 		ret = t_ret;
+
+
+		key.data1 = "chara2";
+		key.size1 = sizeof("chara2");
+		data.data1 = "fate";
+		data.size1 = sizeof("fate");
+
+		if ((ret = dbp->put(dbp, NULL, &key, &data, 0)) == 0)
+			printf("db: %s: key stored.\n", (char *)key.data1);
+		else {
+			dbp->err(dbp, ret, "DB->put");
+			goto err;
+		}
+		if ((ret = dbp->get(dbp, NULL, &key, &data, 0)) == 0)
+			printf("db: %s: key retrieved: data was %s.\n",
+					(char *)key.data1, (char *)data.data1);
+		else {
+			dbp->err(dbp, ret, "DB->get");
+			goto err;
+		}
+
+		if ((ret = dbp->del(dbp, NULL, &key, 0)) == 0)
+			printf("db: %s: key was deleted.\n", (char *)key.data1);
+		else {
+			dbp->err(dbp, ret, "DB->del");
+			goto err;
+		}
+
+		if ((ret = dbp->get(dbp, NULL, &key, &data, 0)) == 0)
+			printf("db: %s: key retrieved: data was %s.\n",
+					(char *)key.data1, (char *)data.data1);
+		else
+			dbp->err(dbp, ret, "DB->get");
+		err:	if ((t_ret = dbp->close(dbp, 0)) != 0 && ret == 0)
+			ret = t_ret;
 
 	exit(ret);
 }
