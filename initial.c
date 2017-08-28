@@ -44,10 +44,10 @@ int main()
 		goto err;
 	}
 
-		key.data = "chara2"
-		key.size = sizeof("chara2")
-		data.data = "testarossa"
-		data.size = "testarossa"
+		key.data = "chara2";
+		key.size = sizeof("chara2");
+		data.data = "testarossa";
+		data.size = sizeof("testarossa");
 
 		if ((ret = dbp->put(dbp, NULL, &key, &data, DB_NOOVERWRITE)) == 0)
 			printf("db: %s: key stored.\n", (char *)key.data);
@@ -62,7 +62,7 @@ int main()
 			dbp->err(dbp, ret, "DB->get");
 			goto err;
 		}
-		
+
 // 	if ((ret = dbp->del(dbp, NULL, &key, 0)) == 0)
 // 		printf("db: %s: key was deleted.\n", (char *)key.data);
 // 	else {
