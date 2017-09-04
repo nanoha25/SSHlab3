@@ -30,7 +30,7 @@ int main()
 	data.data = "nanoha";
 	data.size = sizeof("nanoha");
 
-	if ((ret = dbp->put(dbp, NULL, &key, &data, DB_NOOVERWRITE)) == 0)
+	if ((ret = dbp->put(dbp, NULL, &key, &data, 0)) == 0)
 		printf("db: %s: key stored.\n", (char *)key.data);
 	else {
 		dbp->err(dbp, ret, "DB->put");
@@ -49,7 +49,7 @@ int main()
 		data.data = "testarossa";
 		data.size = sizeof("testarossa");
 
-		if ((ret = dbp->put(dbp, NULL, &key, &data, DB_NOOVERWRITE)) == 0)
+		if ((ret = dbp->put(dbp, NULL, &key, &data, 0)) == 0)
 			printf("db: %s: key stored.\n", (char *)key.data);
 		else {
 			dbp->err(dbp, ret, "DB->put");
@@ -64,13 +64,6 @@ int main()
 		}
 
 
-		if ((ret = dbp->get(dbp, NULL, &key, &data, 0)) == 0)
-			printf("db: %s: key retrieved: data was %s.\n",
-			    (char *)key.data, (char *)data.data);
-		else {
-			dbp->err(dbp, ret, "DB->get");
-			goto err;
-		}
 
 // 	if ((ret = dbp->del(dbp, NULL, &key, 0)) == 0)
 // 		printf("db: %s: key was deleted.\n", (char *)key.data);
